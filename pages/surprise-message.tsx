@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import { Heart, BookOpen, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { trackClick } from "../../components/analytics-tracker"
+import { trackClick } from "@/components/analytics-tracker"
 
 export default function SurpriseMessage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)

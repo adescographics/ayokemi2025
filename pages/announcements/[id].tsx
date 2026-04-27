@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import { Heart, Calendar, Clock, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { trackClick } from "../../../components/analytics-tracker"
+import { trackClick } from "@/components/analytics-tracker"
 
 export default function AnnouncementDetailPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)

@@ -5,8 +5,8 @@ import { Heart, MapPin, Calendar, Menu, X, Bell } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { Button } from "@/components/ui/button"
-import AnalyticsTracker, { trackClick } from "../../components/analytics-tracker"
-import SurpriseToggle from "../../components/surprise-toggle"
+import AnalyticsTracker, { trackClick } from "@/components/analytics-tracker"
+import SurpriseToggle from "@/components/surprise-toggle"
 import CountdownModal from "./countdown-modal"
 
 interface LayoutProps {

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import { Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { trackClick } from "../../components/analytics-tracker"
+import { trackClick } from "@/components/analytics-tracker"
 import { useRouter } from "next/router"
 
 export default function ThankYouPage() {

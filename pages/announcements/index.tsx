@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { Calendar, Clock, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { trackClick } from "../../../components/analytics-tracker"
+import { trackClick } from "@/components/analytics-tracker"
 
 export default function AnnouncementsPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
