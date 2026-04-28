@@ -81,7 +81,7 @@ export default function AnnouncementDetailPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock className="w-4 h-4" />
-                    <span>12:00 AM</span>
+                    <span>3:39 AM</span>
                   </div>
                 </div>
               </div>
