@@ -7,6 +7,7 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useLanguage } from "@/hooks/use-language"
 
 interface FormErrors {
   name?: string
@@ -38,6 +39,7 @@ export default function UploadPhotoPage() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitMessage, setSubmitMessage] = useState("")
   const [isDragActive, setIsDragActive] = useState(false)
+  const { t } = useLanguage()
 
   // Current date and time
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -198,9 +200,11 @@ export default function UploadPhotoPage() {
             }`}
             style={{ transitionDelay: "100ms" }}
           >
-            <h1 className="text-3xl md:text-4xl font-medium tracking-widest uppercase mb-4">Upload Your Photo</h1>
+            <h1 className="text-3xl md:text-4xl font-medium tracking-widest uppercase mb-4">
+              {t("pages.uploadPhotoTitle")}
+            </h1>
             <p className="text-sm md:text-base font-mono tracking-wider text-gray-600">
-              Share your precious moments from our wedding celebration
+              {t("pages.uploadPhotoSubtitle")}
             </p>
           </div>
 
@@ -220,10 +224,10 @@ export default function UploadPhotoPage() {
               }`}
               style={{ transitionDelay: "200ms" }}
             >
-              <label className="block text-sm font-medium tracking-widest uppercase mb-2">Name *</label>
+              <label className="block text-sm font-medium tracking-widest uppercase mb-2">{t("pages.nameRequired")}</label>
               <Input
                 type="text"
-                placeholder="Your full name"
+                placeholder={t("pages.fullName")}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full border-2 border-black rounded-none focus:ring-2 focus:ring-black focus:border-transparent"
@@ -238,7 +242,7 @@ export default function UploadPhotoPage() {
               }`}
               style={{ transitionDelay: "300ms" }}
             >
-              <label className="block text-sm font-medium tracking-widest uppercase mb-2">Email *</label>
+              <label className="block text-sm font-medium tracking-widest uppercase mb-2">{t("pages.emailRequired")}</label>
               <Input
                 type="email"
                 placeholder="your.email@example.com"
@@ -257,7 +261,7 @@ export default function UploadPhotoPage() {
               style={{ transitionDelay: "400ms" }}
             >
               <div>
-                <label className="block text-sm font-medium tracking-widest uppercase mb-2">Date</label>
+                <label className="block text-sm font-medium tracking-widest uppercase mb-2">{t("pages.date")}</label>
                 <Input
                   type="text"
                   value={currentDate}
@@ -266,7 +270,7 @@ export default function UploadPhotoPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium tracking-widest uppercase mb-2">Time</label>
+                <label className="block text-sm font-medium tracking-widest uppercase mb-2">{t("pages.time")}</label>
                 <Input
                   type="text"
                   value={currentTime}
@@ -283,7 +287,7 @@ export default function UploadPhotoPage() {
               }`}
               style={{ transitionDelay: "500ms" }}
             >
-              <label className="block text-sm font-medium tracking-widest uppercase mb-2">Event Category</label>
+              <label className="block text-sm font-medium tracking-widest uppercase mb-2">{t("pages.eventCategory")}</label>
               <Input
                 type="text"
                 value="Guest Photos"
@@ -299,7 +303,7 @@ export default function UploadPhotoPage() {
               }`}
               style={{ transitionDelay: "600ms" }}
             >
-              <label className="block text-sm font-medium tracking-widest uppercase mb-2">Upload Image *</label>
+              <label className="block text-sm font-medium tracking-widest uppercase mb-2">{t("pages.uploadImage")}</label>
               <div
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
@@ -324,18 +328,18 @@ export default function UploadPhotoPage() {
                       }}
                       className="text-xs font-medium tracking-widest uppercase text-red-600 hover:text-red-700"
                     >
-                      Remove Image
+                      {t("common.cancel")}
                     </button>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     <div className="text-4xl">📸</div>
                     <div>
-                      <p className="text-sm font-medium tracking-wider mb-2">Drag and drop your image here</p>
+                      <p className="text-sm font-medium tracking-wider mb-2">{t("pages.uploadImage")}</p>
                       <p className="text-xs font-mono text-gray-600 mb-4">or</p>
                       <label className="inline-block">
                         <span className="px-6 py-2 border-2 border-black bg-white text-black text-xs font-medium tracking-widest uppercase hover:bg-black hover:text-white transition-all cursor-pointer">
-                          Choose File
+                          {t("pages.chooseImage")}
                         </span>
                         <input type="file" accept="image/*" onChange={handleImageSelect} className="hidden" />
                       </label>
@@ -353,9 +357,11 @@ export default function UploadPhotoPage() {
               }`}
               style={{ transitionDelay: "700ms" }}
             >
-              <label className="block text-sm font-medium tracking-widest uppercase mb-2">Photo Description</label>
+              <label className="block text-sm font-medium tracking-widest uppercase mb-2">
+                {t("pages.photoDescription")}
+              </label>
               <Textarea
-                placeholder="Tell us about this photo (optional)"
+                placeholder={t("pages.photoDescriptionPlaceholder")}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 className="w-full border-2 border-black rounded-none focus:ring-2 focus:ring-black focus:border-transparent min-h-[100px]"
@@ -370,13 +376,13 @@ export default function UploadPhotoPage() {
               style={{ transitionDelay: "800ms" }}
             >
               <label className="block text-sm font-medium tracking-widest uppercase mb-2">
-                Security Verification *
+                {t("pages.securityQuestion")} *
               </label>
               <div className="bg-blue-50 border-2 border-blue-300 rounded-none p-4 mb-3">
                 <p className="text-sm font-medium text-blue-900 mb-3">{puzzle?.question}</p>
                 <Input
                   type="number"
-                  placeholder="Enter your answer"
+                  placeholder={t("pages.securityPlaceholder")}
                   value={puzzleAnswer}
                   onChange={(e) => setPuzzleAnswer(e.target.value)}
                   className="w-full border-2 border-blue-300 rounded-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -404,7 +410,7 @@ export default function UploadPhotoPage() {
                 disabled={isLoading}
                 className="flex-1 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-all font-medium tracking-widest uppercase rounded-none h-12"
               >
-                {isLoading ? "Uploading..." : "Upload Photo"}
+                {isLoading ? t("pages.submitting") : t("pages.submitPhoto")}
               </Button>
               <Link href="/gallery" className="flex-1">
                 <Button
@@ -412,7 +418,7 @@ export default function UploadPhotoPage() {
                   variant="outline"
                   className="w-full border-2 border-black text-black hover:bg-gray-100 font-medium tracking-widest uppercase rounded-none h-12 bg-transparent"
                 >
-                  Back to Gallery
+                  {t("pages.backGallery")}
                 </Button>
               </Link>
             </div>

@@ -11,6 +11,7 @@ import { trackClick } from "@/components/analytics-tracker"
 import RateLimitModal from "@/components/rate-limit-modal"
 import { checkClientRateLimit } from "@/lib/rate-limit-utils"
 import { FormSkeleton } from "@/components/page-skeleton"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function WishesPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
@@ -19,6 +20,7 @@ export default function WishesPage() {
   const [showRateLimitModal, setShowRateLimitModal] = useState(false)
   const [rateLimitResetTime, setRateLimitResetTime] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const { t } = useLanguage()
   const [wishForm, setWishForm] = useState({
     name: "",
     message: "",
@@ -63,11 +65,11 @@ export default function WishesPage() {
         setShowWishModal(true)
         setWishForm({ name: "", message: "" })
       } else {
-        alert("Failed to send wishes. Please try again.")
+        alert(t("common.error"))
       }
     } catch (error) {
       console.error("Error submitting wishes:", error)
-      alert("Failed to send wishes. Please try again.")
+      alert(t("common.error"))
     }
   }
 
@@ -99,13 +101,13 @@ export default function WishesPage() {
 
             <nav className="flex flex-col items-center space-y-6">
               {[
-                { name: "HOME", href: "/" },
-                { name: "OUR STORY", href: "/story" },
-                { name: "DETAILS", href: "/details" },
-                { name: "GALLERY", href: "/gallery" },
-                { name: "RSVP", href: "/rsvp" },
-                { name: "WISHES", href: "/wishes" },
-                { name: "CONTACT", href: "/contact" },
+                { name: t("nav.home"), href: "/" },
+                { name: t("nav.ourStory"), href: "/story" },
+                { name: t("nav.details"), href: "/details" },
+                { name: t("nav.gallery"), href: "/gallery" },
+                { name: t("nav.rsvp"), href: "/rsvp" },
+                { name: t("nav.wishes"), href: "/wishes" },
+                { name: t("nav.contact"), href: "/contact" },
               ].map((item) => (
                 <Link
                   key={item.name}
@@ -135,15 +137,15 @@ export default function WishesPage() {
             </button>
 
             <Heart className="w-16 h-16 text-red-500 mx-auto mb-6" />
-            <h3 className="text-lg font-medium tracking-widest uppercase mb-4">WISHES RECEIVED!</h3>
+            <h3 className="text-lg font-medium tracking-widest uppercase mb-4">{t("pages.wishesReceived")}</h3>
             <p className="text-sm font-mono tracking-wider text-gray-600 mb-6">
-              Thank you for your beautiful wishes and blessings. Your words mean the world to us!
+              {t("pages.wishesThanks")}
             </p>
             <Button
               onClick={() => setShowWishModal(false)}
               className="bg-black text-white hover:bg-gray-800 border-0 text-xs font-medium tracking-widest uppercase px-6 py-2"
             >
-              CLOSE
+              {t("common.close")}
             </Button>
           </div>
         </div>
@@ -164,9 +166,9 @@ export default function WishesPage() {
             }`}
             style={{ transitionDelay: "300ms" }}
           >
-            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">PRAYERS & WISHES</h2>
+            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">{t("pages.wishesTitle")}</h2>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-500">
-              Share your blessings and well wishes for our new journey
+              {t("pages.wishesSubtitle")}
             </p>
           </div>
 
@@ -178,7 +180,7 @@ export default function WishesPage() {
             style={{ transitionDelay: "500ms" }}
           >
             <div>
-              <label className="block text-xs font-medium tracking-widest uppercase mb-2">YOUR NAME *</label>
+              <label className="block text-xs font-medium tracking-widest uppercase mb-2">{t("pages.yourName")}</label>
               <Input
                 type="text"
                 required
@@ -189,14 +191,14 @@ export default function WishesPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium tracking-widest uppercase mb-2">YOUR MESSAGE *</label>
+              <label className="block text-xs font-medium tracking-widest uppercase mb-2">{t("pages.yourMessage")}</label>
               <Textarea
                 required
                 value={wishForm.message}
                 onChange={(e) => setWishForm({ ...wishForm, message: e.target.value })}
                 className="border-black text-xs font-mono tracking-wider"
                 rows={6}
-                placeholder="Share your prayers, blessings, and wishes for Peter & Elizabeth..."
+                placeholder={t("pages.wishesPlaceholder")}
               />
             </div>
 
@@ -205,7 +207,7 @@ export default function WishesPage() {
               className="w-full bg-black text-white hover:bg-gray-800 border-0 text-xs font-medium tracking-widest uppercase px-6 py-3 transition-all duration-300 hover:scale-105"
             >
               <Heart className="w-4 h-4 mr-2" />
-              SEND WISHES
+              {t("pages.sendWishes")}
             </Button>
           </form>
         </div>

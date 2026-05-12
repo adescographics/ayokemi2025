@@ -4,10 +4,12 @@ import { Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { trackClick } from "@/components/analytics-tracker"
 import { useRouter } from "next/router"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function ThankYouPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
   const router = useRouter()
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -42,7 +44,7 @@ export default function ThankYouPage() {
                 <Heart className="w-12 h-12 md:w-16 md:h-16 text-black" />
               </div>
               <h1 className="text-3xl md:text-5xl font-medium tracking-wider uppercase mb-4 text-balance">
-                With a Heart Full of Gratitude
+                {t("pages.thankYouTitle")}
               </h1>
               <p className="text-sm md:text-base font-mono tracking-wider text-gray-600 text-pretty">Ayokemi 2025</p>
             </div>
@@ -58,23 +60,19 @@ export default function ThankYouPage() {
       >
         <div className="space-y-8 font-mono text-base md:text-lg leading-relaxed text-gray-800">
           <p className="text-pretty">
-            On behalf of my wife and me, we are sincerely grateful to everyone who celebrated with us and contributed in
-            one way or another to making our wedding truly memorable. Your prayers, presence, kind words, sacrifices,
-            and generous gifts meant more to us than we can adequately express.
+            {t("pages.thankYouP1")}
           </p>
 
           <p className="text-pretty">
-            We are reminded once again that the gift of people is real, and we do not take it for granted. Thank you for
-            standing with us, rejoicing with us, and sharing in this special moment of our lives. These memories will
-            remain with us for a long time.
+            {t("pages.thankYouP2")}
           </p>
 
           <p className="text-pretty">
-            We pray that God rewards you abundantly, and His grace continually rests upon you.
+            {t("pages.thankYouP3")}
           </p>
 
           <div className="mt-12 pt-8 border-t border-gray-200">
-            <p className="font-medium text-center text-lg md:text-xl text-black">From Mr. & Mrs. Ayoola Fakeye</p>
+            <p className="font-medium text-center text-lg md:text-xl text-black">{t("pages.fromCouple")}</p>
           </div>
         </div>
 
@@ -87,7 +85,7 @@ export default function ThankYouPage() {
             }}
             className="bg-black text-white hover:bg-gray-800 px-8 py-6 text-sm font-medium tracking-widest uppercase"
           >
-            Back to Homepage
+            {t("pages.backHome")}
           </Button>
         </div>
       </article>

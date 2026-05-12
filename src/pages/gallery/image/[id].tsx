@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { ImageDetailPanel } from "@/components/image-detail-panel"
+import { useLanguage } from "@/hooks/use-language"
 
 interface GuestPhoto {
   id: string
@@ -22,6 +23,7 @@ export default function ImagePage() {
   const { id } = router.query
   const [photo, setPhoto] = useState<GuestPhoto | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     if (!id) return
@@ -50,7 +52,7 @@ export default function ImagePage() {
   if (isLoading) {
     return (
       <div className="fixed inset-0 z-[70] bg-black flex items-center justify-center">
-        <p className="text-white text-sm font-mono tracking-wider">Loading...</p>
+        <p className="text-white text-sm font-mono tracking-wider">{t("common.loading")}</p>
       </div>
     )
   }
@@ -59,17 +61,17 @@ export default function ImagePage() {
     return (
       <div className="fixed inset-0 z-[70] bg-black flex items-center justify-center">
         <div className="text-center">
-          <p className="text-white text-sm font-mono tracking-wider mb-4">Photo not found</p>
+          <p className="text-white text-sm font-mono tracking-wider mb-4">{t("pages.noPhotos")}</p>
           <button
             onClick={handleClose}
             className="px-4 py-2 bg-white text-black text-xs font-medium tracking-widest uppercase hover:bg-gray-200"
           >
-            Back to Gallery
+            {t("pages.backGallery")}
           </button>
         </div>
       </div>
     )
   }
 
-  return <ImageDetailPanel image={photo} onClose={handleClose} />
+  return <ImageDetailPanel image={{ ...photo, title: photo.title || t("pages.untitled") }} onClose={handleClose} />
 }

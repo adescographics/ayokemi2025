@@ -11,6 +11,7 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "@/components/ui/pagination"
+import { useLanguage } from "@/hooks/use-language"
 
 interface GalleryImage {
   src: string
@@ -354,6 +355,7 @@ export default function GalleryPage() {
   const [isLoadingPhotos, setIsLoadingPhotos] = useState(true)
   const [galleryPage, setGalleryPage] = useState(1)
   const [guestPhotoPage, setGuestPhotoPage] = useState(1)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -382,6 +384,14 @@ export default function GalleryPage() {
   }
 
   const categories = ["All", ...GALLERY_CATEGORIES]
+  const translateCategory = (category: string) => {
+    if (category === "All") return t("pages.all")
+    if (category === "Pre-wedding") return t("pages.preWedding")
+    if (category === "Engagement") return t("home.engagement")
+    if (category === "Church wedding") return t("home.churchWedding")
+    if (category === "Reception") return t("pages.reception")
+    return category
+  }
   const filteredImages = filter === "All" ? galleryImages : galleryImages.filter((img) => img.category === filter)
 
   const totalGalleryPages = Math.ceil(filteredImages.length / IMAGES_PER_PAGE)
@@ -504,7 +514,7 @@ export default function GalleryPage() {
               onClick={() => setSelectedImage(null)}
               className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors text-sm font-medium tracking-widest uppercase"
             >
-              CLOSE ✕
+              {t("pages.closeImage")} X
             </button>
             <ImageWithLoading
               src={selectedImage.src || "/placeholder.svg"}
@@ -514,7 +524,7 @@ export default function GalleryPage() {
             <div className="mt-4 text-center">
               <p className="text-white text-sm font-mono tracking-wider">{selectedImage.caption}</p>
               <p className="text-gray-400 text-xs font-medium tracking-widest uppercase mt-2">
-                {selectedImage.category}
+                {translateCategory(selectedImage.category)}
               </p>
             </div>
           </div>
@@ -530,9 +540,9 @@ export default function GalleryPage() {
             }`}
             style={{ transitionDelay: "300ms" }}
           >
-            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">OUR GALLERY</h2>
+            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">{t("pages.galleryTitle")}</h2>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-500">
-              Moments captured, memories cherished forever
+              {t("pages.gallerySubtitle")}
             </p>
           </div>
 
@@ -553,7 +563,7 @@ export default function GalleryPage() {
                     : "bg-white text-black border-2 border-black hover:bg-gray-100"
                 }`}
               >
-                {category}
+                {translateCategory(category)}
               </button>
             ))}
           </div>
@@ -581,7 +591,9 @@ export default function GalleryPage() {
                   </div>
                   <div className="p-4 border-t-2 border-black">
                     <p className="text-xs font-mono tracking-wider text-gray-700 mb-2">{image.caption}</p>
-                    <p className="text-[10px] font-medium tracking-widest uppercase text-gray-500">{image.category}</p>
+                    <p className="text-[10px] font-medium tracking-widest uppercase text-gray-500">
+                      {translateCategory(image.category)}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -591,7 +603,7 @@ export default function GalleryPage() {
           {/* Empty State */}
           {paginatedGalleryImages.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-sm font-mono tracking-wider text-gray-500">No images found in this category</p>
+              <p className="text-sm font-mono tracking-wider text-gray-500">{t("pages.noImages")}</p>
             </div>
           )}
 
@@ -635,9 +647,9 @@ export default function GalleryPage() {
         <div className="max-w-7xl mx-auto">
           {/* Guest Gallery Header */}
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">GUEST PHOTOS</h2>
+            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">{t("pages.guestPhotos")}</h2>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-500">
-              Check out these images uploaded by our wedding guests
+              {t("pages.guestPhotosSubtitle")}
             </p>
           </div>
 
@@ -647,11 +659,11 @@ export default function GalleryPage() {
 
           {isLoadingPhotos ? (
             <div className="text-center py-12">
-              <p className="text-sm font-mono tracking-wider text-gray-500">Loading photos...</p>
+              <p className="text-sm font-mono tracking-wider text-gray-500">{t("pages.loadingPhotos")}</p>
             </div>
           ) : guestPhotos.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-sm font-mono tracking-wider text-gray-500">No photos yet. Check back soon!</p>
+              <p className="text-sm font-mono tracking-wider text-gray-500">{t("pages.noPhotos")}</p>
             </div>
           ) : (
             <>
@@ -680,9 +692,11 @@ export default function GalleryPage() {
                             />
                           </div>
                           <div className="p-4">
-                            <p className="text-sm font-medium tracking-wide mb-1">{photo.title || "Untitled"}</p>
+                            <p className="text-sm font-medium tracking-wide mb-1">
+                              {photo.title || t("pages.untitled")}
+                            </p>
                             <p className="text-xs font-medium tracking-widest uppercase text-gray-600 mb-2">
-                              By: {photo.uploader_name || "Anonymous"}
+                              {t("pages.by")}: {photo.uploader_name || t("pages.anonymous")}
                             </p>
                             <p className="text-xs font-mono tracking-wider text-gray-500">{photo.event}</p>
                           </div>
@@ -735,7 +749,7 @@ export default function GalleryPage() {
           image={{
             id: selectedGuestPhoto.id,
             url: selectedGuestPhoto.url,
-            title: selectedGuestPhoto.title || "Untitled",
+            title: selectedGuestPhoto.title || t("pages.untitled"),
             uploader_name: selectedGuestPhoto.uploader_name,
             uploader_email: selectedGuestPhoto.uploader_email,
             event: selectedGuestPhoto.event,

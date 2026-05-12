@@ -3,9 +3,11 @@ import { useState, useEffect } from "react"
 import { Heart, BookOpen, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { trackClick } from "@/components/analytics-tracker"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function SurpriseMessage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -28,10 +30,10 @@ export default function SurpriseMessage() {
             <Mail className="w-16 h-16 text-black" />
           </div>
           <h1 className="text-4xl md:text-6xl font-medium tracking-wider uppercase mb-6 text-balance">
-            A Special Message
+            {t("pages.specialMessage")}
           </h1>
           <p className="text-base md:text-lg font-mono tracking-wider text-gray-600 max-w-2xl mx-auto text-pretty">
-            As you celebrate with us today, we invite you to reflect on a deeper truth about love and marriage.
+            {t("pages.specialMessageSubtitle")}
           </p>
         </div>
       </section>
@@ -48,11 +50,11 @@ export default function SurpriseMessage() {
             <Heart className="w-12 h-12 text-black" />
           </div>
           <h2 className="text-3xl md:text-5xl font-medium tracking-wider uppercase mb-4 text-balance">
-            Herein Is Love
+            {t("pages.hereinLove")}
           </h2>
           <div className="flex items-center justify-center space-x-2 text-xs font-mono tracking-widest uppercase text-gray-500">
             <BookOpen className="w-4 h-4" />
-            <span>A Message of Hope</span>
+            <span>{t("pages.hopeMessage")}</span>
           </div>
         </header>
 
@@ -136,7 +138,7 @@ export default function SurpriseMessage() {
             }}
             className="bg-black text-white hover:bg-gray-800 px-8 py-6 text-sm font-medium tracking-widest uppercase"
           >
-            Share This Message
+            {t("pages.shareMessage")}
           </Button>
         </div>
       </article>

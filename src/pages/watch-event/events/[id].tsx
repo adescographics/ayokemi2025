@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useRouter } from "next/router"
 import Link from "next/link"
+import { useLanguage } from "@/hooks/use-language"
 
 interface EventDetail {
   title: string
@@ -45,6 +46,7 @@ interface FormData {
 export default function EventDetailPage() {
   const router = useRouter()
   const { id } = router.query
+  const { t } = useLanguage()
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -55,7 +57,7 @@ export default function EventDetailPage() {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
 
   if (!id || typeof id !== "string") {
-    return <div className="text-center py-16">Loading...</div>
+    return <div className="text-center py-16">{t("common.loading")}</div>
   }
 
   const event = eventDetails[id]
@@ -63,10 +65,10 @@ export default function EventDetailPage() {
   if (!event) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-600 mb-4">Event not found</p>
+        <p className="text-gray-600 mb-4">{t("pages.eventNotFound")}</p>
         <Link href="/watch-event">
           <button className="px-6 py-2 bg-black text-white text-xs font-medium tracking-widest uppercase hover:bg-gray-800">
-            Back to Events
+            {t("pages.backEvents")}
           </button>
         </Link>
       </div>
@@ -124,7 +126,7 @@ export default function EventDetailPage() {
         {/* Back Button */}
         <Link href="/watch-event">
           <button className="text-xs font-medium tracking-widest uppercase text-black hover:text-gray-600 transition-colors mb-8">
-            ← Back to Events
+            &larr; {t("pages.backEvents")}
           </button>
         </Link>
 
@@ -133,15 +135,15 @@ export default function EventDetailPage() {
           <h1 className="text-2xl md:text-4xl font-medium tracking-widest uppercase mb-4">{event.title}</h1>
           <div className="space-y-2">
             <div className="flex items-center gap-4">
-              <span className="text-xs font-medium tracking-widest uppercase text-gray-600">Date:</span>
+              <span className="text-xs font-medium tracking-widest uppercase text-gray-600">{t("pages.dateLabel")}</span>
               <span className="text-sm font-mono tracking-wider text-gray-700">{event.date}</span>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-xs font-medium tracking-widest uppercase text-gray-600">Time:</span>
+              <span className="text-xs font-medium tracking-widest uppercase text-gray-600">{t("pages.timeLabel")}</span>
               <span className="text-sm font-mono tracking-wider text-gray-700">{event.time}</span>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-xs font-medium tracking-widest uppercase text-gray-600">Location:</span>
+              <span className="text-xs font-medium tracking-widest uppercase text-gray-600">{t("pages.locationLabel")}</span>
               <span className="text-sm font-mono tracking-wider text-gray-700">{event.location}</span>
             </div>
           </div>
@@ -163,7 +165,7 @@ export default function EventDetailPage() {
           {/* About Section */}
           <div className="md:col-span-2">
             <div className="border-2 border-black p-6 md:p-8">
-              <h2 className="text-lg font-medium tracking-widest uppercase mb-4">About This Event</h2>
+              <h2 className="text-lg font-medium tracking-widest uppercase mb-4">{t("pages.aboutEvent")}</h2>
               <p className="text-sm font-mono tracking-wider text-gray-700 leading-relaxed">{event.description}</p>
             </div>
           </div>
@@ -171,7 +173,7 @@ export default function EventDetailPage() {
           {/* Contact Section */}
           <div className="md:col-span-1">
             <div className="border-2 border-black p-6">
-              <h3 className="text-sm font-medium tracking-widest uppercase mb-4">Video Issues?</h3>
+              <h3 className="text-sm font-medium tracking-widest uppercase mb-4">{t("pages.videoIssues")}</h3>
               <div className="space-y-3 text-xs font-mono tracking-wider text-gray-700">
                 <div>
                   <p className="font-medium text-gray-900 mb-1">Phone:</p>
@@ -193,7 +195,7 @@ export default function EventDetailPage() {
         {/* Issue Report Form */}
         <div className="mt-8 md:mt-12">
           <div className="border-2 border-black p-6 md:p-8 max-w-2xl">
-            <h2 className="text-lg font-medium tracking-widest uppercase mb-6">Report Video Issue</h2>
+            <h2 className="text-lg font-medium tracking-widest uppercase mb-6">{t("pages.reportIssue")}</h2>
 
             {submitStatus === "success" && (
               <div className="mb-6 p-4 bg-green-100 border-2 border-green-600 text-green-800 text-xs font-mono tracking-wider">
@@ -209,7 +211,7 @@ export default function EventDetailPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium tracking-widest uppercase mb-2">Name</label>
+                <label className="block text-xs font-medium tracking-widest uppercase mb-2">{t("pages.yourName")}</label>
                 <input
                   type="text"
                   name="name"
@@ -217,12 +219,12 @@ export default function EventDetailPage() {
                   onChange={handleInputChange}
                   required
                   className="w-full px-4 py-2 border-2 border-black text-xs font-mono tracking-wider focus:outline-none focus:bg-gray-50"
-                  placeholder="Your name"
+                  placeholder={t("pages.yourName")}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium tracking-widest uppercase mb-2">Email</label>
+                <label className="block text-xs font-medium tracking-widest uppercase mb-2">{t("pages.email")}</label>
                 <input
                   type="email"
                   name="email"
@@ -235,7 +237,7 @@ export default function EventDetailPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-medium tracking-widest uppercase mb-2">Issue Type</label>
+                <label className="block text-xs font-medium tracking-widest uppercase mb-2">{t("pages.issueType")}</label>
                 <select
                   name="issueType"
                   value={formData.issueType}
@@ -251,7 +253,7 @@ export default function EventDetailPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-medium tracking-widest uppercase mb-2">Details</label>
+                <label className="block text-xs font-medium tracking-widest uppercase mb-2">{t("pages.details")}</label>
                 <textarea
                   name="details"
                   value={formData.details}
@@ -259,7 +261,7 @@ export default function EventDetailPage() {
                   required
                   rows={4}
                   className="w-full px-4 py-2 border-2 border-black text-xs font-mono tracking-wider focus:outline-none focus:bg-gray-50 resize-none"
-                  placeholder="Describe the issue you're experiencing..."
+                  placeholder={t("pages.detailsPlaceholder")}
                 />
               </div>
 
@@ -268,7 +270,7 @@ export default function EventDetailPage() {
                 disabled={isSubmitting}
                 className="w-full px-6 py-3 bg-black text-white text-xs font-medium tracking-widest uppercase hover:bg-gray-800 disabled:bg-gray-400 transition-colors"
               >
-                {isSubmitting ? "Submitting..." : "Submit Report"}
+                {isSubmitting ? t("pages.submitting") : t("pages.submitReport")}
               </button>
             </form>
           </div>

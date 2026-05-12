@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useLanguage } from "@/hooks/use-language"
 
 interface Event {
   id: string
@@ -37,6 +38,7 @@ const events: Event[] = [
 
 export default function WatchEventPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -55,9 +57,9 @@ export default function WatchEventPage() {
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <h1 className="text-2xl md:text-4xl font-medium tracking-widest uppercase mb-4">Watch Our Wedding Live</h1>
+          <h1 className="text-2xl md:text-4xl font-medium tracking-widest uppercase mb-4">{t("pages.watchLive")}</h1>
           <p className="text-xs md:text-sm font-mono tracking-wider text-gray-500">
-            Join us virtually to celebrate our special moments
+            {t("pages.watchSubtitle")}
           </p>
         </div>
 
@@ -82,21 +84,27 @@ export default function WatchEventPage() {
               {/* Content */}
               <div className="p-6 md:p-8">
                 {/* Title */}
-                <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">{event.title}</h2>
+                <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">
+                  {event.id === "652411" ? t("pages.engagementCeremony") : t("pages.weddingCeremony")}
+                </h2>
 
                 {/* Details */}
                 <div className="space-y-2 mb-6">
                   <div className="flex items-start gap-3">
-                    <span className="text-xs font-medium tracking-widest uppercase text-gray-600 min-w-fit">Date:</span>
+                    <span className="text-xs font-medium tracking-widest uppercase text-gray-600 min-w-fit">
+                      {t("pages.dateLabel")}
+                    </span>
                     <span className="text-xs font-mono tracking-wider text-gray-700">{event.date}</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="text-xs font-medium tracking-widest uppercase text-gray-600 min-w-fit">Time:</span>
+                    <span className="text-xs font-medium tracking-widest uppercase text-gray-600 min-w-fit">
+                      {t("pages.timeLabel")}
+                    </span>
                     <span className="text-xs font-mono tracking-wider text-gray-700">{event.time}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-xs font-medium tracking-widest uppercase text-gray-600 min-w-fit">
-                      Location:
+                      {t("pages.locationLabel")}
                     </span>
                     <span className="text-xs font-mono tracking-wider text-gray-700">{event.location}</span>
                   </div>
@@ -110,7 +118,7 @@ export default function WatchEventPage() {
                 {/* Watch Now Button */}
                 <Link href={`/watch-event/events/${event.id}`}>
                   <button className="w-full px-6 py-3 bg-black text-white text-xs font-medium tracking-widest uppercase hover:bg-gray-800 transition-colors">
-                    Watch Now
+                    {t("pages.watchNow")}
                   </button>
                 </Link>
               </div>

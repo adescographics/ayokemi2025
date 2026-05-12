@@ -2,9 +2,11 @@
 import { useState, useEffect } from "react"
 import { Github, Facebook, Instagram, Twitter, Mail, MessageCircle, Youtube, Linkedin } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function AboutDeveloperPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -42,9 +44,9 @@ export default function AboutDeveloperPage() {
             <div className="w-20 h-20 md:w-24 md:h-24 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-6 overflow-hidden">
               <img src="/assets/favicon.png" alt="Developer Logo" className="w-full h-full object-contain p-2" />
             </div>
-            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">ABOUT THE DEVELOPER</h2>
+            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">{t("pages.aboutDeveloper")}</h2>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-500">
-              Meet the developer behind this beautiful wedding website
+              {t("pages.aboutDeveloperSubtitle")}
             </p>
           </div>
 
@@ -56,11 +58,10 @@ export default function AboutDeveloperPage() {
           >
             <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-2">AARON ADEJOLA</h3>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-600 mb-4">
-              Full Stack Web Developer & UI/UX Designer
+              {t("pages.developerRole")}
             </p>
             <p className="text-xs font-mono tracking-wider text-gray-500 leading-relaxed">
-              Passionate about creating beautiful, functional websites that tell your story. Specializing in modern web
-              technologies and elegant design solutions for special occasions.
+              {t("pages.developerBio")}
             </p>
           </div>
 
@@ -70,7 +71,7 @@ export default function AboutDeveloperPage() {
             }`}
             style={{ transitionDelay: "700ms" }}
           >
-            <h4 className="text-sm font-medium tracking-widest uppercase mb-6 text-center">CONNECT WITH ME</h4>
+            <h4 className="text-sm font-medium tracking-widest uppercase mb-6 text-center">{t("pages.connectWithMe")}</h4>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {socialLinks.map((social, index) => (
                 <Button
@@ -93,7 +94,7 @@ export default function AboutDeveloperPage() {
             style={{ transitionDelay: "900ms" }}
           >
             <p className="text-xs font-mono tracking-wider text-gray-500">
-              Need a website for your special day? Let's create something beautiful together.
+              {t("pages.developerCta")}
             </p>
           </div>
         </div>

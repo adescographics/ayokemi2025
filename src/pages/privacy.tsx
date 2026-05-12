@@ -1,11 +1,14 @@
 import { Card } from "@/components/ui/card"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function Privacy() {
+  const { t } = useLanguage()
+
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-8 py-12">
       <div className="mb-12">
-        <h1 className="text-3xl md:text-4xl font-medium tracking-widest uppercase mb-4">Privacy Policy</h1>
-        <p className="text-sm font-mono tracking-wider text-gray-600">Last updated: December 2024</p>
+        <h1 className="text-3xl md:text-4xl font-medium tracking-widest uppercase mb-4">{t("nav.privacy")}</h1>
+        <p className="text-sm font-mono tracking-wider text-gray-600">{t("pages.lastUpdated")}: December 2024</p>
       </div>
 
       <div className="space-y-8">
@@ -100,7 +103,7 @@ export default function Privacy() {
         </Card>
 
         <Card className="p-6 border-2 border-gray-300">
-          <h2 className="text-xl font-medium tracking-widest uppercase mb-3">8. Contact Us</h2>
+          <h2 className="text-xl font-medium tracking-widest uppercase mb-3">8. {t("pages.contactUs")}</h2>
           <p className="text-sm font-mono tracking-wider text-gray-700 leading-relaxed">
             If you have questions about this Privacy Policy or our privacy practices, please contact us at:
           </p>

@@ -1,9 +1,11 @@
 "use client"
 import { useState, useEffect } from "react"
 import { ImageWithLoading } from "@/components/image-with-loading"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function StoryPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -21,7 +23,9 @@ export default function StoryPage() {
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-6 md:mb-8">OUR STORY</h2>
+          <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-6 md:mb-8">
+            {t("pages.storyTitle")}
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
@@ -38,7 +42,9 @@ export default function StoryPage() {
                 alt="Elizabeth - The Bride"
                 className="w-32 h-32 md:w-48 md:h-48 mx-auto object-cover rounded-full mb-4 md:mb-6"
               />
-              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4">ELIZABETH'S STORY</h3>
+              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4">
+                {t("pages.elizabethStory")}
+              </h3>
             </div>
             <div className="space-y-3 md:space-y-4 text-xs md:text-sm font-mono tracking-wider text-gray-600">
               <p>
@@ -84,7 +90,9 @@ export default function StoryPage() {
                 alt="Peter - The Groom"
                 className="w-32 h-32 md:w-48 md:h-48 mx-auto object-cover rounded-full mb-4 md:mb-6"
               />
-              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4">PETER'S STORY</h3>
+              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4">
+                {t("pages.peterStory")}
+              </h3>
             </div>
             <div className="space-y-3 md:space-y-4 text-xs md:text-sm font-mono tracking-wider text-gray-600">
               <p>

@@ -1,10 +1,12 @@
 "use client"
 import { useState, useEffect } from "react"
 import { Calendar, Clock, MapPin, Copy, Check } from "lucide-react"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function DetailsPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
   const [copied, setCopied] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,7 +34,7 @@ export default function DetailsPage() {
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase">WEDDING DETAILS</h2>
+          <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase">{t("pages.detailsTitle")}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-16">
@@ -44,7 +46,9 @@ export default function DetailsPage() {
             style={{ transitionDelay: "500ms" }}
           >
             <div className="border-2 border-black p-6 md:p-8">
-              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">ENGAGEMENT</h3>
+              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">
+                {t("home.engagement")}
+              </h3>
               <div className="space-y-3 md:space-y-4 text-xs md:text-sm font-mono tracking-wider">
                 <div className="flex items-center justify-center">
                   <Calendar className="w-4 h-4 mr-2 md:mr-3 text-black" />
@@ -80,7 +84,7 @@ export default function DetailsPage() {
           >
             <div className="border-2 border-black p-6 md:p-8">
               <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">
-                CHURCH WEDDING
+                {t("home.churchWedding")}
               </h3>
               <div className="space-y-3 md:space-y-4 text-xs md:text-sm font-mono tracking-wider">
                 <div className="flex items-center justify-center">
@@ -111,7 +115,9 @@ export default function DetailsPage() {
           style={{ transitionDelay: "900ms" }}
         >
           <div className="border-2 border-black p-6 md:p-8 max-w-2xl mx-auto">
-            <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">RECEPTION</h3>
+            <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">
+              {t("pages.reception")}
+            </h3>
             <div className="space-y-3 md:space-y-4 text-xs md:text-sm font-mono tracking-wider">
               <div className="flex items-center justify-center">
                 <Calendar className="w-4 h-4 mr-2 md:mr-3 text-black" />
@@ -119,7 +125,7 @@ export default function DetailsPage() {
               </div>
               <div className="flex items-center justify-center">
                 <Clock className="w-4 h-4 mr-2 md:mr-3 text-black" />
-                <span>SHORTLY AFTER THE CHURCH WEDDING</span>
+                <span>{t("pages.shortlyAfter")}</span>
               </div>
               <div className="flex items-center justify-center">
                 <MapPin className="w-4 h-4 mr-2 md:mr-3 text-black" />
@@ -139,38 +145,40 @@ export default function DetailsPage() {
           style={{ transitionDelay: "1100ms" }}
         >
           <div className="border-2 border-black p-6 md:p-8 max-w-2xl mx-auto">
-            <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">WEDDING GIFT</h3>
+            <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">
+              {t("home.weddingGift")}
+            </h3>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-600 mb-6">
-              You can kindly send a gift to the couples using the details below
+              {t("home.giftIntro")}
             </p>
             <div className="space-y-3 md:space-y-4 text-xs md:text-sm font-mono tracking-wider">
               <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-                <span className="font-medium">Account Number:</span>
+                <span className="font-medium">{t("home.accountNumber")}</span>
                 <div className="flex items-center space-x-2">
                   <span>1955374567</span>
                   <button
                     onClick={() => copyToClipboard("1955374567")}
                     className="p-1 hover:bg-gray-100 rounded transition-colors"
-                    title="Copy account number"
+                    title={t("common.copyAccount")}
                   >
                     {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4 text-gray-600" />}
                   </button>
                 </div>
               </div>
               <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-                <span className="font-medium">Account Name:</span>
+                <span className="font-medium">{t("home.accountName")}</span>
                 <span>FAKEYE PETER AYOOLA AND EMMANUEL ELIZABETH AJOKE</span>
               </div>
               <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-                <span className="font-medium">Bank Name:</span>
+                <span className="font-medium">{t("home.bankName")}</span>
                 <span>Access Bank</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="font-medium">Phone Number:</span>
+                <span className="font-medium">{t("home.phoneNumber")}</span>
                 <span>+2348167788117</span>
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-4">Kindly send receipt for confirmation to the phone number above</p>
+            <p className="text-xs text-gray-500 mt-4">{t("home.receipt")}</p>
           </div>
         </div>
 
@@ -182,15 +190,17 @@ export default function DetailsPage() {
           style={{ transitionDelay: "1300ms" }}
         >
           <div className="border-2 border-black p-6 md:p-8 max-w-4xl mx-auto">
-            <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">DRESS CODE</h3>
+            <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-4 md:mb-6">
+              {t("home.dressCode")}
+            </h3>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-600 mb-8">
-              Please dress in the following colors for each event
+              {t("home.dressIntro")}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {/* Engagement */}
               <div className="flex flex-col items-center">
                 <p className="text-xs md:text-sm font-medium tracking-widest uppercase mb-4 text-gray-700">
-                  ENGAGEMENT
+                  {t("home.engagement")}
                 </p>
                 <div className="flex gap-3 md:gap-4 mb-4">
                   <div
@@ -205,15 +215,15 @@ export default function DetailsPage() {
                   />
                 </div>
                 <span className="text-xs font-medium tracking-widest uppercase text-center">
-                  Rusty Gold &<br />
-                  Burnt Orange
+                  {t("home.rustyGold")} &<br />
+                  {t("home.burntOrange")}
                 </span>
               </div>
 
               {/* Church Wedding */}
               <div className="flex flex-col items-center">
                 <p className="text-xs md:text-sm font-medium tracking-widest uppercase mb-4 text-gray-700">
-                  Church Wedding
+                  {t("home.churchWedding")}
                 </p>
                 <div className="flex gap-3 md:gap-4 mb-4">
                   <div
@@ -228,8 +238,8 @@ export default function DetailsPage() {
                   />
                 </div>
                 <span className="text-xs font-medium tracking-widest uppercase text-center">
-                  Mustard Yellow &<br />
-                  Burgundy
+                  {t("home.mustardYellow")} &<br />
+                  {t("home.burgundy")}
                 </span>
               </div>
             </div>

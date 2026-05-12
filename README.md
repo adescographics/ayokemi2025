@@ -15,7 +15,7 @@ A sophisticated Next.js wedding website for Elizabeth & Peter's special day (Dec
 
 ### Guest Features
 
-* **Home Page** - Elegant landing with new year celebration modal
+* **Home Page** - Elegant landing with multilingual navigation
 * **Our Story** - Couple's personal narrative journey
 * **Wedding Details** - Dates, venues, and locations with copy-to-clipboard
 * **Photo Gallery** - Combined curated + guest photos with pagination

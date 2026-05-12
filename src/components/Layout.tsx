@@ -7,7 +7,8 @@ import { useRouter } from "next/router"
 import { Button } from "@/components/ui/button"
 import AnalyticsTracker, { trackClick } from "@/components/analytics-tracker"
 import SurpriseToggle from "@/components/surprise-toggle"
-import CountdownModal from "./countdown-modal"
+import LanguageSwitcher from "./language-switcher"
+import { useLanguage } from "@/hooks/use-language"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -30,6 +31,7 @@ export default function Layout({ children }: LayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showCookieConsent, setShowCookieConsent] = useState(false)
   const router = useRouter()
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -50,14 +52,14 @@ export default function Layout({ children }: LayoutProps) {
   }
 
   const navigationItems = [
-    { name: "HOME", href: "/" },
-    { name: "OUR STORY", href: "/story" },
-    { name: "DETAILS", href: "/details" },
-    { name: "GALLERY", href: "/gallery" },
-    { name: "RSVP", href: "/rsvp" },
-    { name: "WISHES", href: "/wishes" },
-    { name: "CONTACT", href: "/contact" },
-    { name: "THANK YOU", href: "/thank-you" },
+    { key: "home", label: t("nav.home"), href: "/" },
+    { key: "our-story", label: t("nav.ourStory"), href: "/story" },
+    { key: "details", label: t("nav.details"), href: "/details" },
+    { key: "gallery", label: t("nav.gallery"), href: "/gallery" },
+    { key: "rsvp", label: t("nav.rsvp"), href: "/rsvp" },
+    { key: "wishes", label: t("nav.wishes"), href: "/wishes" },
+    { key: "contact", label: t("nav.contact"), href: "/contact" },
+    { key: "thank-you", label: t("nav.thankYou"), href: "/thank-you" },
   ]
 
   return (
@@ -68,7 +70,6 @@ export default function Layout({ children }: LayoutProps) {
     >
       <AnalyticsTracker />
       <SurpriseToggle />
-      <CountdownModal />
 
       <header
         className={`px-4 md:px-8 py-6 border-b transition-all duration-700 fixed w-full z-50 backdrop-blur-sm bg-white/95 border-gray-200 ${
@@ -88,15 +89,15 @@ export default function Layout({ children }: LayoutProps) {
               <div className="flex items-center space-x-6 lg:space-x-8">
                 {navigationItems.map((item, index) => (
                   <Link
-                    key={item.name}
+                    key={item.key}
                     href={item.href}
-                    onClick={() => trackClick(`nav-${item.name.toLowerCase().replace(" ", "-")}`)}
+                    onClick={() => trackClick(`nav-${item.key}`)}
                     className={`hover:text-gray-500 text-xs font-medium tracking-widest uppercase transition-all duration-500 ${
                       router.pathname === item.href ? "text-gray-600" : "text-black"
                     } ${isPageLoaded ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
                     style={{ transitionDelay: `${200 + index * 100}ms` }}
                   >
-                    {item.name}
+                    {item.label}
                   </Link>
                 ))}
               </div>
@@ -104,12 +105,14 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Right side controls */}
             <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
+
               {/* Notification bell */}
               <Link
                 href="/announcements"
                 onClick={() => trackClick("nav-announcements")}
                 className="p-2 hover:text-gray-500 transition-colors text-black relative"
-                aria-label="View announcements"
+                aria-label={t("nav.announcements")}
               >
                 <Bell className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
@@ -154,20 +157,22 @@ export default function Layout({ children }: LayoutProps) {
             <nav className="flex flex-col items-center space-y-6">
               {navigationItems.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.key}
                   href={item.href}
                   onClick={() => {
                     setIsMobileMenuOpen(false)
-                    trackClick(`mobile-nav-${item.name.toLowerCase().replace(" ", "-")}`)
+                    trackClick(`mobile-nav-${item.key}`)
                   }}
                   className={`hover:text-gray-500 text-lg font-medium tracking-widest uppercase transition-all duration-300 ${
                     router.pathname === item.href ? "text-gray-600" : "text-black"
                   }`}
                 >
-                  {item.name}
+                  {item.label}
                 </Link>
               ))}
             </nav>
+
+            <LanguageSwitcher />
           </div>
         </div>
       )}
@@ -179,8 +184,7 @@ export default function Layout({ children }: LayoutProps) {
               <CookieIcon />
               <div className="flex-1">
                 <p className="text-xs font-mono tracking-wider mb-3">
-                  We use cookies to enhance your browsing experience and remember your preferences. By continuing to use
-                  our website, you consent to our use of cookies.
+                  {t("layout.cookies")}
                 </p>
                 <div className="flex space-x-2">
                   <Button
@@ -190,7 +194,7 @@ export default function Layout({ children }: LayoutProps) {
                     }}
                     className="text-xs font-medium tracking-widest uppercase px-4 py-2 bg-black text-white hover:bg-gray-800"
                   >
-                    ACCEPT
+                    {t("common.accept")}
                   </Button>
                   <Button
                     variant="outline"
@@ -200,7 +204,7 @@ export default function Layout({ children }: LayoutProps) {
                     }}
                     className="text-xs font-medium tracking-widest uppercase px-4 py-2 border-black text-black hover:bg-gray-100"
                   >
-                    DECLINE
+                    {t("common.decline")}
                   </Button>
                 </div>
               </div>
@@ -221,21 +225,21 @@ export default function Layout({ children }: LayoutProps) {
                 <Heart className="h-6 w-6 mr-3 text-black" />
                 <span className="text-lg font-medium tracking-widest uppercase">Elizabeth & Peter</span>
               </div>
-              <p className="text-xs font-mono tracking-wider text-gray-600">Two hearts, one love, forever united.</p>
+              <p className="text-xs font-mono tracking-wider text-gray-600">{t("layout.tagline")}</p>
             </div>
 
             {/* Navigation Links */}
             <div className="text-center">
-              <h3 className="text-sm font-medium tracking-widest uppercase mb-4">Quick Links</h3>
+              <h3 className="text-sm font-medium tracking-widest uppercase mb-4">{t("layout.quickLinks")}</h3>
               <div className="grid grid-cols-2 gap-2">
                 {navigationItems.map((item) => (
                   <Link
-                    key={item.name}
+                    key={item.key}
                     href={item.href}
-                    onClick={() => trackClick(`footer-${item.name.toLowerCase().replace(" ", "-")}`)}
+                    onClick={() => trackClick(`footer-${item.key}`)}
                     className="text-xs font-medium tracking-widest uppercase hover:text-gray-500 transition-colors text-gray-700"
                   >
-                    {item.name}
+                    {item.label}
                   </Link>
                 ))}
                 <Link
@@ -243,21 +247,21 @@ export default function Layout({ children }: LayoutProps) {
                   onClick={() => trackClick("footer-changelog")}
                   className="text-xs font-medium tracking-widest uppercase hover:text-gray-500 transition-colors text-gray-700"
                 >
-                  CHANGELOG
+                  {t("nav.changelog")}
                 </Link>
                 <Link
                   href="/about-developer"
                   onClick={() => trackClick("footer-developer")}
                   className="text-xs font-medium tracking-widest uppercase hover:text-gray-500 transition-colors text-gray-700"
                 >
-                  DEVELOPER
+                  {t("nav.developer")}
                 </Link>
               </div>
             </div>
 
             {/* Wedding Info */}
             <div className="text-center md:text-right">
-              <h3 className="text-sm font-medium tracking-widest uppercase mb-4">Wedding Details</h3>
+              <h3 className="text-sm font-medium tracking-widest uppercase mb-4">{t("layout.weddingDetails")}</h3>
               <div className="space-y-2">
                 <div className="flex items-center justify-center md:justify-end">
                   <Calendar className="w-4 h-4 mr-2 text-black" />
@@ -274,9 +278,9 @@ export default function Layout({ children }: LayoutProps) {
           {/* Bible Verse */}
           <div className="text-center mt-12 pt-8 border-t border-gray-200">
             <p className="text-xs font-mono tracking-wider italic mb-2 text-gray-600">
-              "My beloved is mine, and I am my beloved's."
+              {t("layout.verse")}
             </p>
-            <p className="text-xs font-medium tracking-widest uppercase text-gray-500">Song of Solomon 6:3</p>
+            <p className="text-xs font-medium tracking-widest uppercase text-gray-500">{t("layout.verseRef")}</p>
           </div>
 
           {/* Privacy and Terms Links */}
@@ -287,7 +291,7 @@ export default function Layout({ children }: LayoutProps) {
                 onClick={() => trackClick("footer-privacy")}
                 className="text-xs font-medium tracking-widest uppercase hover:text-gray-500 transition-colors text-gray-700"
               >
-                PRIVACY
+                {t("nav.privacy")}
               </Link>
               <span className="text-gray-400">•</span>
               <Link
@@ -295,13 +299,11 @@ export default function Layout({ children }: LayoutProps) {
                 onClick={() => trackClick("footer-terms")}
                 className="text-xs font-medium tracking-widest uppercase hover:text-gray-500 transition-colors text-gray-700"
               >
-                TERMS
+                {t("nav.terms")}
               </Link>
             </div>
-            <p className="text-xs font-mono tracking-wider text-gray-500">Made with ❤️ for our special day</p>
-            <p className="text-xs font-mono tracking-wider text-gray-500 mt-2">
-              © 2026 Elizabeth & Peter. All rights reserved.
-            </p>
+            <p className="text-xs font-mono tracking-wider text-gray-500">{t("layout.madeWithLove")}</p>
+            <p className="text-xs font-mono tracking-wider text-gray-500 mt-2">{t("layout.copyright")}</p>
           </div>
         </div>
       </footer>

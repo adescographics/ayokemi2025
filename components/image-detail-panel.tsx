@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { Download, Share2, Calendar, Clock, MapPin, User, Mail, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/hooks/use-language"
 
 interface ImageDetailPanelProps {
   image: {
@@ -20,6 +21,7 @@ interface ImageDetailPanelProps {
 
 export function ImageDetailPanel({ image, onClose }: ImageDetailPanelProps) {
   const [isCopied, setIsCopied] = useState(false)
+  const { t } = useLanguage()
 
   const handleDownload = async () => {
     try {
@@ -97,7 +99,7 @@ export function ImageDetailPanel({ image, onClose }: ImageDetailPanelProps) {
         <div className="w-full lg:w-[420px] bg-white overflow-y-auto">
           {/* Close Button */}
           <div className="sticky top-0 bg-white border-b-2 border-gray-200 p-4 flex justify-between items-center">
-            <h3 className="text-sm font-medium tracking-widest uppercase">Photo Details</h3>
+            <h3 className="text-sm font-medium tracking-widest uppercase">{t("pages.photoDetails")}</h3>
             <button onClick={onClose} className="p-2 hover:bg-gray-100 transition-colors rounded-full">
               <X className="w-5 h-5" />
             </button>
@@ -116,21 +118,23 @@ export function ImageDetailPanel({ image, onClose }: ImageDetailPanelProps) {
             <div className="flex gap-2">
               <Button onClick={handleDownload} variant="outline" className="flex-1 gap-2 bg-transparent">
                 <Download className="w-4 h-4" />
-                <span className="text-xs tracking-wider">Download</span>
+                <span className="text-xs tracking-wider">{t("pages.download")}</span>
               </Button>
               <Button onClick={handleShare} variant="outline" className="flex-1 gap-2 bg-transparent">
                 <Share2 className="w-4 h-4" />
-                <span className="text-xs tracking-wider">{isCopied ? "Copied!" : "Share"}</span>
+                <span className="text-xs tracking-wider">{isCopied ? t("pages.copied") : t("pages.share")}</span>
               </Button>
             </div>
 
             {/* Uploader Info */}
             <div className="pt-4 border-t-2 border-gray-200 space-y-3">
-              <h4 className="text-xs font-medium tracking-widest uppercase text-gray-500 mb-3">Uploader Information</h4>
+              <h4 className="text-xs font-medium tracking-widest uppercase text-gray-500 mb-3">
+                {t("pages.uploaderInfo")}
+              </h4>
               <div className="flex items-center gap-3">
                 <User className="w-4 h-4 text-gray-500" />
                 <div>
-                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">Name</p>
+                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">{t("pages.yourName")}</p>
                   <p className="text-sm font-mono tracking-wider">{image.uploader_name}</p>
                 </div>
               </div>
@@ -145,18 +149,20 @@ export function ImageDetailPanel({ image, onClose }: ImageDetailPanelProps) {
 
             {/* Photo Details */}
             <div className="pt-4 border-t-2 border-gray-200 space-y-3">
-              <h4 className="text-xs font-medium tracking-widest uppercase text-gray-500 mb-3">Photo Details</h4>
+              <h4 className="text-xs font-medium tracking-widest uppercase text-gray-500 mb-3">
+                {t("pages.photoDetails")}
+              </h4>
               <div className="flex items-center gap-3">
                 <Calendar className="w-4 h-4 text-gray-500" />
                 <div>
-                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">Date</p>
+                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">{t("pages.date")}</p>
                   <p className="text-sm font-mono tracking-wider">{formatDate(image.uploaded_at)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Clock className="w-4 h-4 text-gray-500" />
                 <div>
-                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">Time</p>
+                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">{t("pages.time")}</p>
                   <p className="text-sm font-mono tracking-wider">{formatTime(image.uploaded_at)}</p>
                 </div>
               </div>
@@ -164,7 +170,7 @@ export function ImageDetailPanel({ image, onClose }: ImageDetailPanelProps) {
                 <div className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-gray-500" />
                   <div>
-                    <p className="text-xs font-medium tracking-widest uppercase text-gray-500">Location</p>
+                    <p className="text-xs font-medium tracking-widest uppercase text-gray-500">{t("pages.locationLabel")}</p>
                     <p className="text-sm font-mono tracking-wider">{image.location}</p>
                   </div>
                 </div>
@@ -174,7 +180,7 @@ export function ImageDetailPanel({ image, onClose }: ImageDetailPanelProps) {
                   <div className="w-2 h-2 rounded-full bg-gray-500" />
                 </div>
                 <div>
-                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">Event</p>
+                  <p className="text-xs font-medium tracking-widest uppercase text-gray-500">{t("pages.eventCategory")}</p>
                   <p className="text-sm font-mono tracking-wider">{image.event}</p>
                 </div>
               </div>
@@ -182,7 +188,7 @@ export function ImageDetailPanel({ image, onClose }: ImageDetailPanelProps) {
 
             {/* Share Link */}
             <div className="pt-4 border-t-2 border-gray-200">
-              <p className="text-xs font-medium tracking-widest uppercase text-gray-500 mb-2">Share Link</p>
+              <p className="text-xs font-medium tracking-widest uppercase text-gray-500 mb-2">{t("pages.shareLink")}</p>
               <div className="bg-gray-50 p-3 rounded border-2 border-gray-200">
                 <p className="text-xs font-mono text-gray-600 break-all">
                   {`${typeof window !== "undefined" ? window.location.origin : ""}/gallery/image/${image.id}`}

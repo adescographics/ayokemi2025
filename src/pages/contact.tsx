@@ -3,8 +3,21 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Phone, Mail, MapPin } from "lucide-react"
 import { PageSkeleton } from "@/components/page-skeleton"
+import { useLanguage } from "@/hooks/use-language"
 
-const MapWidget = ({ title, lat, lng, address }: { title: string; lat: number; lng: number; address: string }) => {
+const MapWidget = ({
+  title,
+  lat,
+  lng,
+  address,
+  buttonLabel,
+}: {
+  title: string
+  lat: number
+  lng: number
+  address: string
+  buttonLabel: string
+}) => {
   const mapUrl = `https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed`
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
 
@@ -12,23 +25,14 @@ const MapWidget = ({ title, lat, lng, address }: { title: string; lat: number; l
     <div>
       <h4 className="text-xs md:text-sm font-medium tracking-wide mb-3">{title}</h4>
       <div className="border-2 border-black overflow-hidden rounded-sm bg-gray-100 relative">
-        {/* Static map image with fallback */}
-        <div className="w-full h-[350px] flex items-center justify-center bg-gray-200 relative">
-          <img
-            src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=15&size=600x350&style=feature:all|element:labels|visibility:off&markers=color:red%7C${lat},${lng}&key=AIzaSyDummyKey`}
-            alt={title}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              // Fallback if image fails to load
-              const target = e.target as HTMLImageElement
-              target.style.display = "none"
-            }}
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-90">
-            <MapPin className="w-8 h-8 mb-2 text-black" />
-            <p className="text-xs font-mono text-center px-4">{address}</p>
-          </div>
-        </div>
+        <iframe
+          src={mapUrl}
+          title={title}
+          className="h-[350px] w-full"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </div>
       <Button
         variant="outline"
@@ -36,7 +40,7 @@ const MapWidget = ({ title, lat, lng, address }: { title: string; lat: number; l
         className="w-full mt-3 border-black text-black hover:bg-black hover:text-white text-xs font-medium tracking-widest uppercase bg-transparent transition-colors"
         onClick={() => window.open(directionsUrl, "_blank")}
       >
-        OPEN IN GOOGLE MAPS
+        {buttonLabel}
       </Button>
     </div>
   )
@@ -45,6 +49,7 @@ const MapWidget = ({ title, lat, lng, address }: { title: string; lat: number; l
 export default function ContactPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -72,9 +77,11 @@ export default function ContactPage() {
             }`}
             style={{ transitionDelay: "300ms" }}
           >
-            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">CONTACT & LOCATION</h2>
+            <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">
+              {t("pages.contactLocation")}
+            </h2>
             <p className="text-xs md:text-sm font-mono tracking-wider text-gray-500">
-              Get in touch or find us on the map
+              {t("pages.contactSubtitle")}
             </p>
           </div>
 
@@ -86,7 +93,9 @@ export default function ContactPage() {
               }`}
               style={{ transitionDelay: "500ms" }}
             >
-              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-6 md:mb-8">CONTACT US</h3>
+              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-6 md:mb-8">
+                {t("pages.contactUs")}
+              </h3>
               <div className="space-y-4 md:space-y-6">
                 <div className="flex items-center">
                   <Phone className="w-4 md:w-5 h-4 md:h-5 mr-3 md:mr-4 text-black flex-shrink-0" />
@@ -112,10 +121,12 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-200">
-                <h4 className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4">VENUES</h4>
+                <h4 className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4">
+                  {t("pages.venues")}
+                </h4>
                 <div className="space-y-3 md:space-y-4">
                   <div>
-                    <p className="text-xs md:text-sm font-medium tracking-wide">ENGAGEMENT</p>
+                    <p className="text-xs md:text-sm font-medium tracking-wide">{t("home.engagement")}</p>
                     <p className="text-xs font-mono tracking-wider text-gray-600">
                       After VMT water factory
                       <br />
@@ -127,7 +138,7 @@ export default function ContactPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs md:text-sm font-medium tracking-wide">CHURCH WEDDING</p>
+                    <p className="text-xs md:text-sm font-medium tracking-wide">{t("home.churchWedding")}</p>
                     <p className="text-xs font-mono tracking-wider text-gray-600">
                       Trinity Baptist Church
                       <br />
@@ -139,7 +150,7 @@ export default function ContactPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs md:text-sm font-medium tracking-wide">RECEPTION</p>
+                    <p className="text-xs md:text-sm font-medium tracking-wide">{t("pages.reception")}</p>
                     <p className="text-xs font-mono tracking-wider text-gray-600">
                       OSBACON Events Center
                       <br />
@@ -158,7 +169,9 @@ export default function ContactPage() {
               }`}
               style={{ transitionDelay: "700ms" }}
             >
-              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-6 md:mb-8">LOCATION MAPS</h3>
+              <h3 className="text-base md:text-lg font-medium tracking-widest uppercase mb-6 md:mb-8">
+                {t("pages.locationMaps")}
+              </h3>
 
               {/* Church Ceremony Map */}
               <div className="mb-8">
@@ -167,6 +180,7 @@ export default function ContactPage() {
                   lat={7.8014602}
                   lng={4.5389218}
                   address="Trinity Baptist Church, Osogbo, Osun State"
+                  buttonLabel={t("pages.openMaps")}
                 />
               </div>
 
@@ -177,6 +191,7 @@ export default function ContactPage() {
                   lat={7.7689187}
                   lng={4.5448757}
                   address="OSBACON Events Center, Behind Baptist Girls' High School, Osogbo"
+                  buttonLabel={t("pages.openMaps")}
                 />
               </div>
             </div>

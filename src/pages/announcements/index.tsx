@@ -4,9 +4,11 @@ import { Calendar, Clock, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { trackClick } from "@/components/analytics-tracker"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function AnnouncementsPage() {
   const [isPageLoaded, setIsPageLoaded] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -28,9 +30,11 @@ export default function AnnouncementsPage() {
           <div className="flex justify-center mb-6">
             <Heart className="w-12 h-12 md:w-16 md:h-16 text-black" />
           </div>
-          <h1 className="text-3xl md:text-5xl font-medium tracking-wider uppercase mb-4 text-balance">Announcements</h1>
+          <h1 className="text-3xl md:text-5xl font-medium tracking-wider uppercase mb-4 text-balance">
+            {t("pages.announcementsTitle")}
+          </h1>
           <p className="text-sm md:text-base font-mono tracking-wider text-gray-600 text-pretty">
-            Stay updated with the latest news from Ayokemi 2025
+            {t("pages.announcementsSubtitle")}
           </p>
         </div>
       </section>
@@ -69,18 +73,18 @@ export default function AnnouncementsPage() {
                   </div>
 
                   <h2 className="text-xl md:text-2xl font-medium tracking-wider uppercase mb-4 text-balance">
-                    Happy New Year 2026!
+                    {t("pages.newYearTitle")}
                   </h2>
 
                   <p className="text-sm md:text-base font-mono leading-relaxed text-gray-800 mb-6 text-pretty">
-                    Wishing you a blessed and prosperous new year filled with love, joy, and cherished moments together. Thank you for being part of our special journey!
+                    {t("pages.newYearExcerpt")}
                   </p>
                 </div>
 
                 <div>
                   <Link href="/announcements/20782" onClick={() => trackClick("announcement-read-more")}>
                     <Button className="bg-black text-white hover:bg-gray-800 px-6 py-3 text-xs font-medium tracking-widest uppercase w-full md:w-auto">
-                      Read More
+                      {t("pages.readMore")}
                     </Button>
                   </Link>
                 </div>
@@ -115,19 +119,18 @@ export default function AnnouncementsPage() {
                   </div>
 
                   <h2 className="text-xl md:text-2xl font-medium tracking-wider uppercase mb-4 text-balance">
-                    With a Heart Full of Gratitude
+                    {t("pages.thankYouTitle")}
                   </h2>
 
                   <p className="text-sm md:text-base font-mono leading-relaxed text-gray-800 mb-6 text-pretty">
-                    On behalf of my wife and me, we are sincerely grateful to everyone who celebrated with us and
-                    contributed in one way or another to making our wedding truly memorable...
+                    {t("pages.thankYouP1")}
                   </p>
                 </div>
 
                 <div>
                   <Link href="/announcements/20781" onClick={() => trackClick("announcement-read-more")}>
                     <Button className="bg-black text-white hover:bg-gray-800 px-6 py-3 text-xs font-medium tracking-widest uppercase w-full md:w-auto">
-                      Read More
+                      {t("pages.readMore")}
                     </Button>
                   </Link>
                 </div>

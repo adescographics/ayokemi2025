@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { Home, Heart, Calendar, ImageIcon, Mail, MessageSquare, Phone, FileText, ExternalLink } from "lucide-react"
+import { useLanguage } from "@/hooks/use-language"
 
 interface PageInfo {
   name: string
@@ -16,68 +17,69 @@ interface PageInfo {
 
 export default function Sitemap() {
   const [hoveredPage, setHoveredPage] = useState<string | null>(null)
+  const { t } = useLanguage()
 
   const pages: PageInfo[] = [
     {
-      name: "Home",
+      name: t("nav.home"),
       path: "/",
-      description: "Welcome to our wedding website",
+      description: t("home.title"),
       icon: <Home className="w-5 h-5" />,
       category: "Main",
     },
     {
-      name: "Our Story",
+      name: t("nav.ourStory"),
       path: "/story",
-      description: "Learn about our journey together",
+      description: t("pages.storyTitle"),
       icon: <Heart className="w-5 h-5" />,
       category: "Information",
     },
     {
-      name: "Details",
+      name: t("nav.details"),
       path: "/details",
-      description: "Wedding date, time, and venue information",
+      description: t("pages.detailsTitle"),
       icon: <Calendar className="w-5 h-5" />,
       category: "Information",
     },
     {
-      name: "Gallery",
+      name: t("nav.gallery"),
       path: "/gallery",
-      description: "View our photo collection",
+      description: t("pages.gallerySubtitle"),
       icon: <ImageIcon className="w-5 h-5" />,
       category: "Main",
     },
     {
       name: "RSVP",
       path: "/rsvp",
-      description: "Confirm your attendance",
+      description: t("pages.rsvpSubtitle"),
       icon: <Mail className="w-5 h-5" />,
       category: "Interactive",
     },
     {
-      name: "Wishes",
+      name: t("nav.wishes"),
       path: "/wishes",
-      description: "Leave us a message",
+      description: t("pages.wishesSubtitle"),
       icon: <MessageSquare className="w-5 h-5" />,
       category: "Interactive",
     },
     {
-      name: "Contact",
+      name: t("nav.contact"),
       path: "/contact",
-      description: "Get in touch with us",
+      description: t("pages.contactSubtitle"),
       icon: <Phone className="w-5 h-5" />,
       category: "Information",
     },
     {
-      name: "About Developer",
+      name: t("pages.aboutDeveloper"),
       path: "/about-developer",
-      description: "Meet the developer behind this website",
+      description: t("pages.aboutDeveloperSubtitle"),
       icon: <FileText className="w-5 h-5" />,
       category: "Information",
     },
     {
-      name: "Surprise Message",
+      name: t("pages.specialMessage"),
       path: "/surprise-message",
-      description: "A special message for our guests",
+      description: t("pages.specialMessageSubtitle"),
       icon: <Heart className="w-5 h-5" />,
       category: "Information",
     },
@@ -90,9 +92,9 @@ export default function Sitemap() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
-          <h1 className="text-3xl md:text-4xl font-medium tracking-widest uppercase mb-4">Site Map</h1>
+          <h1 className="text-3xl md:text-4xl font-medium tracking-widest uppercase mb-4">{t("pages.siteMap")}</h1>
           <p className="text-sm font-mono tracking-wider text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Navigate through all available pages on our wedding website. Click any page to visit it directly.
+            {t("pages.siteMapSubtitle")}
           </p>
         </div>
 
@@ -107,7 +109,11 @@ export default function Sitemap() {
               style={{ animationDelay: `${categoryIndex * 100}ms` }}
             >
               <h2 className="text-xl font-medium tracking-widest uppercase mb-6 border-b-2 border-black dark:border-white pb-2">
-                {category} Pages
+                {category === "Main"
+                  ? t("pages.mainPages")
+                  : category === "Information"
+                    ? t("pages.informationPages")
+                    : t("pages.interactivePages")}
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
