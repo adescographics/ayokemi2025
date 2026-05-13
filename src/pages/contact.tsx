@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Phone, Mail, MapPin } from "lucide-react"
+import { Phone, Mail } from "lucide-react"
 import { PageSkeleton } from "@/components/page-skeleton"
 import { useLanguage } from "@/hooks/use-language"
 
@@ -18,7 +18,7 @@ const MapWidget = ({
   address: string
   buttonLabel: string
 }) => {
-  const mapUrl = `https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed`
+  const mapUrl = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
 
   return (
@@ -163,6 +163,7 @@ export default function ContactPage() {
               </div>
             </div>
 
+            {/* Maps */}
             <div
               className={`transition-all duration-700 ${
                 isPageLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
@@ -173,7 +174,6 @@ export default function ContactPage() {
                 {t("pages.locationMaps")}
               </h3>
 
-              {/* Church Ceremony Map */}
               <div className="mb-8">
                 <MapWidget
                   title="CHURCH WEDDING - Trinity Baptist Church"
@@ -184,7 +184,6 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Reception Map */}
               <div>
                 <MapWidget
                   title="RECEPTION VENUE - OSBACON Events Center"

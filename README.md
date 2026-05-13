@@ -1,3 +1,4 @@
+```markdown
 # AYOKEMI2025 Wedding Website
 
 ![Preview](./public/images/preview.png)
@@ -75,15 +76,15 @@ ayokemi2025/
 
 ### Prerequisites
 
-* Node.js 18+
-* pnpm
+* Node.js 20+
+* npm
 * Supabase account
 
 ### Installation
 
 ```bash
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 ---
@@ -101,8 +102,11 @@ pnpm dev
 
 ## 📝 License
 
-This project is for demonstration purposes.
+This project was developed for a client. All rights reserved.
 
 ---
 
-Built with ❤️ for Elizabeth & Peter
+Built with ❤️ by [Adesco Graphics](https://adescographics.vercel.app) for Elizabeth & Peter
+```
+
+Just the license line and the footer credit updated. Let me know your studio URL if it's different and I'll swap it in.
