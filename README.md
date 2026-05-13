@@ -1,7 +1,6 @@
-```markdown
 # AYOKEMI2025 Wedding Website
 
-![Preview](./public/images/preview.png)
+![Preview](/public/images/preview.png)
 
 A sophisticated Next.js wedding website for Elizabeth & Peter's special day (December 20, 2025). This full-featured platform combines public guest interactions with a secure admin dashboard.
 
@@ -16,7 +15,7 @@ A sophisticated Next.js wedding website for Elizabeth & Peter's special day (Dec
 
 ### Guest Features
 
-* **Home Page** - Elegant landing with multilingual navigation
+* **Home Page** - Elegant landing with new year celebration modal
 * **Our Story** - Couple's personal narrative journey
 * **Wedding Details** - Dates, venues, and locations with copy-to-clipboard
 * **Photo Gallery** - Combined curated + guest photos with pagination
@@ -76,15 +75,15 @@ ayokemi2025/
 
 ### Prerequisites
 
-* Node.js 20+
-* npm
+* Node.js 18+
+* pnpm
 * Supabase account
 
 ### Installation
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ---
@@ -102,11 +101,8 @@ npm run dev
 
 ## 📝 License
 
-This project was developed for a client. All rights reserved.
+This project is for demonstration purposes.
 
 ---
 
-Built with ❤️ by [Adesco Graphics](https://adescographics.vercel.app) for Elizabeth & Peter
-```
-
-Just the license line and the footer credit updated. Let me know your studio URL if it's different and I'll swap it in.
+Built with ❤️ for Elizabeth & Peter
